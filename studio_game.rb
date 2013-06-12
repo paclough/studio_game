@@ -32,10 +32,31 @@ class Player
   
 end
 
+player1 = Player.new( "moe" )
 player2 = Player.new( "larry", 60 )
-puts player2.name
-player2.name = "lawrence"
-puts player2.name
-puts player2.health
-puts player2.score
-puts player2
+player3 = Player.new( "curly", 125 )
+
+players = [ player1, player2, player3]
+
+players.pop
+player4 = Player.new( "shemp", 90 )
+players.push( player4 )
+
+puts "There are #{players.size} players in the game:"
+players.each { |player| puts player }
+
+players.each { |player| puts player.health }
+
+players.each do |player|
+  rounds = 1 + rand( 4 )
+  rounds.times do
+    blam_or_w00t = rand( 10 )
+    if blam_or_w00t < 5
+      player.blam
+    else
+      player.w00t
+    end
+  end
+  puts player
+end
+
