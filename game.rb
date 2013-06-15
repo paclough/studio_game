@@ -14,14 +14,17 @@ class Game
     @players << player
   end
 
-  def play
+  def play( rounds )
 
     puts "There are #{@players.size} players in #{@game_name}:"
     @players.each { |player| puts player }
 
-    @players.each do |player|
-      GameTurn.take_turn( player )
-      puts player
+    1.upto( rounds ) do |round|
+      puts "\n Round: #{round}"
+      @players.each do |player|
+        GameTurn.take_turn( player )
+        puts player
+      end
     end
 
     # @players.each do |player|
@@ -37,6 +40,28 @@ class Game
     #   puts player
     # end
 
+  end
+
+  def print_name_and_health( player )
+    puts "#{player.name} (#{player.health})" 
+  end
+
+  def print_stats
+    strong, wimpy = @players.partition { |p| p.strong? }
+
+    puts "\n#{game_name} Statistics:"
+
+    puts "\n#{strong.size} strong players:"
+    strong.each { |p| print_name_and_health( p ) }
+
+    puts "\n#{wimpy.size} wimpy players:"
+    wimpy.each { |p| print_name_and_health( p ) }
+
+    puts "\n#{game_name} High Scores:"
+    @players.sort.each do |p|
+      name_formatted = p.name.ljust( 20, '.' )
+      puts "#{ name_formatted } #{ p.score }"
+    end
   end
 
 end
