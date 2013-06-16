@@ -29,7 +29,6 @@ class Game
         GameTurn.take_turn( player )
         # puts player
       end
-
     end
 
     # @players.each do |player|
@@ -56,6 +55,13 @@ class Game
 
     puts "\n#{game_name} Statistics:"
 
+    puts "\n#{total_points} total points from treasures found"
+
+    @players.each do |player|
+      puts "\n#{player.name}'s point totals:"
+      puts "#{player.points} grand total points"
+    end
+
     puts "\n#{strong.size} strong players:"
     strong.each { |p| print_name_and_health( p ) }
 
@@ -67,6 +73,10 @@ class Game
       name_formatted = p.name.ljust( 20, '.' )
       puts "#{ name_formatted } #{ p.score }"
     end
+  end
+
+  def total_points
+    @players.reduce(0) { |sum, p| sum += p.points }
   end
 
 end
