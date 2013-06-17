@@ -1,5 +1,6 @@
 require_relative "player"
 require_relative "game_turn"
+require 'csv'
 
 class Game
 
@@ -8,6 +9,17 @@ class Game
   def initialize( name )
     @game_name = name
     @players = []
+  end
+
+  def load_players( from_file )
+    # file_players = File.readlines( from_file )
+    # file_players.each do |p|
+    #   add_player( Player.from_csv( p ) )
+    # end
+    CSV.foreach( from_file ) do |name, health|
+      player = Player.new( name, Integer( health ) )
+      add_player( player )
+    end
   end
 
   def add_player( player )
@@ -35,10 +47,6 @@ class Game
       end
     end
 
-# knuckleheads.play(10) do
-#   knuckleheads.total_points >= 2000
-# end
-
     # @players.each do |player|
     #   rounds = 1 + rand( 4 )
     #   rounds.times do
@@ -56,6 +64,15 @@ class Game
 
   def print_name_and_health( player )
     puts "#{player.name} (#{player.health})" 
+  end
+
+  def print_high_scores
+    output = "\n#{game_name} High Scores:"
+    @players.sort.each do |p|
+      name_formatted = p.name.ljust( 20, '.' )
+      output += "\n#{ name_formatted } #{ p.score }"
+    end
+    output
   end
 
   def print_stats
@@ -79,15 +96,17 @@ class Game
     puts "\n#{wimpy.size} wimpy players:"
     wimpy.each { |p| print_name_and_health( p ) }
 
-    puts "\n#{game_name} High Scores:"
-    @players.sort.each do |p|
-      name_formatted = p.name.ljust( 20, '.' )
-      puts "#{ name_formatted } #{ p.score }"
-    end
+    puts print_high_scores
   end
 
   def total_points
     @players.reduce(0) { |sum, p| sum += p.points }
+  end
+
+  def save_high_scores( to_file="high_scores.txt")
+    File.open( to_file, "w" ) do |file|
+      file.puts print_high_scores
+    end
   end
 
 end

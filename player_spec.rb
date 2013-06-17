@@ -119,6 +119,13 @@ describe Player do
     ]
   end
 
+  it "can parse a CSV line for player information" do
+    player = Player.from_csv( "larry,150" )
+
+    player.name.should == "Larry"
+    player.health.should == 150
+  end
+
 
 
 end
