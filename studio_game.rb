@@ -11,3 +11,8 @@ knuckleheads.add_player( player3 )
 knuckleheads.play( 3 )
 
 knuckleheads.print_stats
+
+knuckleheads.play(10) do
+  knuckleheads.total_points >= 2000
+end
+knuckleheads.print_stats

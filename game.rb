@@ -16,6 +16,7 @@ class Game
 
   def play( rounds )
 
+
     puts "\nThere are #{@players.size} players in #{@game_name}:"
     @players.each { |player| puts player }
 
@@ -24,12 +25,19 @@ class Game
     treasures.each { |treasure| puts "A #{treasure.name} is worth #{treasure.points} points" }
 
     1.upto( rounds ) do |round|
+      if block_given?
+        break if yield
+      end
       puts "\n Round: #{round}"
       @players.each do |player|
         GameTurn.take_turn( player )
         # puts player
       end
     end
+
+# knuckleheads.play(10) do
+#   knuckleheads.total_points >= 2000
+# end
 
     # @players.each do |player|
     #   rounds = 1 + rand( 4 )
