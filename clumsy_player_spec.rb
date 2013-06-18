@@ -2,7 +2,9 @@ require_relative 'clumsy_player'
 
 describe ClumsyPlayer do
   before do
-    @player = ClumsyPlayer.new( "klutz" )
+    @initial_health = 100
+    @boost = 5
+    @player = ClumsyPlayer.new( "klutz", @initial_health, @boost )
   end
 
   it "only gets half the point value for each treasure" do
@@ -26,5 +28,15 @@ describe ClumsyPlayer do
     end
 
     yielded.should == [ Treasure.new( :hammer, 75 ), Treasure.new( :crowbar, 200 ) ]
+  end
+
+  it "has a boost" do
+    @player.boost.should == 5
+  end
+
+  it "gets w00ted boost number of times" do
+    @player.w00t
+
+    @player.health.should == @initial_health + ( 15 * @boost )
   end
 end

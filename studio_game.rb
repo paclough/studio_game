@@ -13,7 +13,7 @@ knuckleheads.load_players( ARGV.shift || "players.csv" )
 # knuckleheads.add_player( player2 )
 # knuckleheads.add_player( player3 )
 
-klutz = ClumsyPlayer.new("klutz", 105)
+klutz = ClumsyPlayer.new("klutz", 105, 5)
 knuckleheads.add_player( klutz )
 
 berserker = BerserkPlayer.new("berserker", 50)
