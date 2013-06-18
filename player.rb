@@ -1,9 +1,11 @@
 require_relative 'treasure_trove'
+require_relative 'playable'
 
 class Player
+  include Playable
 
-  attr_accessor :name
-  attr_reader   :health, :points
+  attr_accessor :name, :health
+  attr_reader   :points
 
   def initialize( name, health = 100 )
     @name = name.capitalize
@@ -44,22 +46,8 @@ class Player
     @found_treasures.values.reduce( 0, :+ )
   end
 
-  def blam
-    @health -= 10
-    puts "#{@name} got blammed!"
-  end
-  
-  def w00t
-    @health += 15
-    puts "#{@name} got w00ted!"
-  end
-
   def score
     @health + points
-  end
-
-  def strong?
-    @health > 100 ? true : false
   end
   
 end
